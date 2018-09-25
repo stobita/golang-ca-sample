@@ -3,9 +3,11 @@ package infra
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/configor"
 	"github.com/stobita/golang-ca-sample/interface/database"
 )
 
@@ -13,7 +15,21 @@ type SqlHandler struct {
 	Conn *sql.DB
 }
 
+type Config struct {
+	DB struct {
+		User     string
+		Password string
+		Host     string
+		Name     string
+	}
+}
+
 func NewSqlHandler() database.SqlHandler {
+
+	var config Config
+	configor.Load(&config, "config/config.yml")
+	log.Println(config)
+
 	driver := "mysql"
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASS")

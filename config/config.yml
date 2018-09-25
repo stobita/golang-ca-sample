@@ -1,0 +1,5 @@
+db:
+  name: golang_ca_sample
+  user: gouser
+  password: gouser
+  host: db
